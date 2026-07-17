@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "prforge"
+version = "0.1.0"
+description = "Agentic PR bot that reads a GitHub issue, writes a fix, runs tests, and opens a reviewed PR. A GSoC co-pilot."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Daksh Agarwal" }]
+keywords = ["agent", "langgraph", "github", "gsoc", "llm", "code-agent", "swe-agent"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Code Generators",
+]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "langgraph>=0.2.50",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+openai = ["openai>=1.50"]
+ollama = ["openai>=1.50"]
+mcp = ["mcp>=1.0"]
+dashboard = ["fastapi>=0.115", "uvicorn>=0.30"]
+dev = ["pytest>=8", "pytest-cov>=5"]
+
+[project.scripts]
+prforge = "prforge.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/daksh1403/prforge"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/prforge"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
